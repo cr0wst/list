@@ -31,18 +31,14 @@
 <div class="flex flex-col space-y-2 max-w-3/4 w-full md:w-1/2 m-auto">
 	{#each uncheckedItems.sort((a,b) => a.label.localeCompare(b.label)) as item (item.id)}
 		<button
-			class="p-2 pl-4 text-left text-lg bg-slate-600 text-slate-300 rounded shadow hover:bg-slate-50 hover:text-slate-500 cursor-pointer"
-			class:bg-slate-500={item.isChecked}
-			class:text-slate-600={item.isChecked}
+			class="p-2 pl-4 text-left text-lg bg-slate-600 text-slate-300 rounded shadow hover:bg-slate-400 hover:text-slate-500 cursor-pointer"
 			on:click={() => toggleItem(item.id, !item.isChecked)}>
 			{item.label}
 		</button>
 	{/each}
 	{#each checkedItems.sort((a,b) => a.label.localeCompare(b.label)) as item (item.id)}
 		<button
-			class="p-2 pl-4 text-left text-lg bg-slate-600 text-slate-300 rounded shadow hover:bg-slate-50 hover:text-slate-500 cursor-pointer"
-			class:bg-slate-500={item.isChecked}
-			class:text-slate-600={item.isChecked}
+			class="p-2 pl-4 text-left text-lg bg-slate-500 text-slate-400 rounded shadow hover:bg-slate-400 hover:text-slate-500 cursor-pointer"
 			on:click={() => toggleItem(item.id, !item.isChecked)}>
 			{item.label}
 		</button>
