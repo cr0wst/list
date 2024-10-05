@@ -6,18 +6,44 @@
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'
-			},
+			}
 		});
 
 		$items = await res.json();
 	}
+
+	async function toggleItem(id: string, isChecked: boolean) {
+		const res = await fetch(`/api/${id}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ isChecked })
+		});
+
+		$items = await res.json();
+	}
+
+	$: checkedItems = $items.filter(i => i.isChecked);
+	$: uncheckedItems = $items.filter(i => !i.isChecked);
 </script>
 
-<div class="flex flex-col space-y-2 max-w-3/4 w-full md:w-3/4 m-auto">
-	{#each $items as item (item.id)}
-		<button class="p-6 bg-slate-100 text-slate-700 rounded shadow hover:bg-slate-50 hover:text-slate-500 cursor-pointer"
-						on:click|preventDefault={() => deleteItem(item.id)}
-		>
+<div class="flex flex-col space-y-2 max-w-3/4 w-full md:w-1/2 m-auto">
+	{#each uncheckedItems.sort((a,b) => a.label.localeCompare(b.label)) as item (item.id)}
+		<button
+			class="p-2 pl-4 text-left text-lg bg-slate-600 text-slate-300 rounded shadow hover:bg-slate-50 hover:text-slate-500 cursor-pointer"
+			class:bg-slate-500={item.isChecked}
+			class:text-slate-600={item.isChecked}
+			on:click={() => toggleItem(item.id, !item.isChecked)}>
+			{item.label}
+		</button>
+	{/each}
+	{#each checkedItems.sort((a,b) => a.label.localeCompare(b.label)) as item (item.id)}
+		<button
+			class="p-2 pl-4 text-left text-lg bg-slate-600 text-slate-300 rounded shadow hover:bg-slate-50 hover:text-slate-500 cursor-pointer"
+			class:bg-slate-500={item.isChecked}
+			class:text-slate-600={item.isChecked}
+			on:click={() => toggleItem(item.id, !item.isChecked)}>
 			{item.label}
 		</button>
 	{/each}

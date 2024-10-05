@@ -8,3 +8,12 @@ export const DELETE = async ({ params }) => {
 	}
 	return json(items);
 }
+
+export const PATCH = async ({ params, request }) => {
+	const index = items.findIndex((item) => item.id === params.id);
+	if (index !== -1) {
+		const item = await request.json();
+		items[index] = { ...items[index], ...item };
+	}
+	return json(items);
+}

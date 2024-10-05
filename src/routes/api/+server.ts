@@ -10,6 +10,15 @@ export const GET = async () => {
 export const POST = async ({ request }) => {
 	const id = crypto.randomUUID();
 	const item = await request.json();
-	items.push({ id, ...item });
+
+	items.push({ id, ...item, createdAt: new Date() });
+
+	return json(items);
+};
+
+export const DELETE = async ({ params }) => {
+	// Remove all items
+	items.splice(0, items.length);
+
 	return json(items);
 };
